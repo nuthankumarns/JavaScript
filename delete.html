@@ -1,0 +1,27 @@
+<script>
+/*var obj = {
+    helloText: "Hello World!"
+};
+console.log(obj);
+var foo = obj;
+console.log(foo);
+//delete obj.helloText;
+delete window.obj
+console.log(foo);
+console.log(obj);*/
+
+
+/*var g_a = 1; //create with var, g_a is a variable 
+delete g_a; //return false
+console.log(g_a); //g_a is still 1
+
+g_b = 1; //create without var, g_b is a property 
+delete g_b; //return true
+console.log(g_b); //error, g_b is not defined*/
+
+
+var sum = function(a, b) {return a + b;}
+var add = sum;
+delete sum;
+console.log(typeof sum);
+</script>

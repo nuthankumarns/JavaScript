@@ -1,0 +1,41 @@
+<script>
+/*(function f(f){ 
+	console.log(typeof f());
+  return typeof f(); 
+})(function(){ return 1; });*/
+
+/*(function(){
+	console.log(typeof arguments);
+    return typeof arguments;
+  })();*/
+
+ /* var f = function g(){ return 23; };
+  console.log(typeof g());*/
+/*var y=(function(x){
+    delete x;
+  //  console.log(x)
+    return x;
+  })(1);
+console.log(y)*/
+
+/* var y = 1, x = y = typeof x;
+  x;
+  console.log(x)
+  console.log(y)*/
+
+/*var foo = {
+    bar: function() { return this.baz; },
+    baz: 1
+  };
+  (function(){
+  	console.log(arguments);
+    return typeof arguments[0]();
+  })(foo.bar);*/
+
+ var foo = {
+    bar: function(){ return this.baz; },
+    baz: 1
+  }
+  typeof (f = foo.bar)();
+
+</script>

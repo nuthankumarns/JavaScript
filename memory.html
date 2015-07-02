@@ -1,0 +1,16 @@
+<script type="text/javascript" src="sizeof.js"></script>
+<script>
+function MyClass() {
+    var privateInstanceVariable = 'foo';
+    this.myFunc = function() { alert(privateInstanceVariable ); }
+}
+
+/*
+function MyClass() { }
+
+MyClass.prototype.myFunc = function() { 
+    alert("I can't use private instance variables. :("); 
+}*/
+var inst=new MyClass();
+console.log(sizeof(inst));
+</script>

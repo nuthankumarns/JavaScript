@@ -1,0 +1,30 @@
+<script>
+function BaseClass(name) {
+    this.name = name;
+}
+
+BaseClass.prototype.foo = function (arg) {
+    return 'This is the foo method with argument: ' + arg;
+};
+
+function SubClass(name) {
+    // Call the base class’ constructor.
+    BaseClass.call(this, name);
+}
+
+// SubClass’ prototype is based on BaseClass’ prototype
+SubClass.prototype = Object.create(BaseClass.prototype);
+
+SubClass.prototype.sub = function () {
+    return 'This is the sub method.'
+}
+
+SubClass.prototype.foo = function (arg) {
+    // Call the base class foo method on the current instance
+    return BaseClass.prototype.foo.call(this, arg) + ' SUB';
+}
+console.log(BaseClass.prototype);
+console.log(SubClass.prototype);
+
+
+</script>

@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Phase 1</title>
+</head>
+<body>
+	<div>
+		<h1>Modular Demo 1</h1>
+	</div>
+	<div id="messagebox"></div>
+
+	<script src="http://code.jquery.com/jquery-1.8.2.js" type="text/javascript"></script>
+
+	<script type="text/javascript">
+
+		var messenger = (function () {
+			console.log($)
+    var text = 'I am a module',
+        showMessage = function() {
+            $("#messagebox").html(text);
+        };
+ 
+    return {
+        showMessage: showMessage
+    };
+})();
+
+
+	</script>
+</body>
+</html>

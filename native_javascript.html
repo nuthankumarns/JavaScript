@@ -1,0 +1,21 @@
+<script>
+//(results will vary by browser)
+console.dir(Function.prototype);
+console.log(Object.getOwnPropertyNames(Function.prototype));
+//["bind", "arguments", "toString", "length", "call", "name", "apply", "caller", "constructor"]
+
+//You can’t delete or replace a native prototype, but you can edit the values of its properties, or create new ones:
+
+//create a new array method that removes a member
+Array.prototype.remove = function(member) {
+  var index = this.indexOf(member);
+  if (index > -1) {
+    this.splice(index, 1);
+  }
+  return this;
+}
+
+console.log(Object.getOwnPropertyNames(Function.prototype));
+
+console.dir(Object);
+</script>

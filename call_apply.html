@@ -1,0 +1,30 @@
+<script>
+//Think of a in apply for array of args and c in call for columns of args.
+//Pseudo syntax:
+
+/*theFunction.apply(valueForThis, arrayOfArgs)
+
+theFunction.call(valueForThis, arg1, arg2, ...)*/
+
+
+function theFunction(name, profession) {
+	console.log(arguments);
+    console.log("My name is " + name + " and I am a " + profession + ".");
+}
+theFunction("John", "fireman");
+theFunction.apply(undefined, ["Susan", "school teacher"]);
+theFunction.call(undefined, "Claude", "mathematician");
+</script>
+<!--
+Apply uses Arrays and Always takes one or two Arguments. When you use Call you have to Count the number of arguments.
+-->
+
+<!--
+use apply if you don't know the number of arguments you will be passing, or if they are already in an array or array-like object (like the arguments object to forward your own arguments. 
+-->
+
+<!--Use call otherwise, since there's no need to wrap the arguments in an array.-->
+
+<!--Both call and apply perform very similar functions: they execute a function in the context, or scope, of the first argument that you pass to them.-->
+
+<!-- they're both functions that can only be called on other functions. -->

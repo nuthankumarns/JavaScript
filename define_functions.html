@@ -1,0 +1,11 @@
+<script>
+/*function isNimble(){ return true; } 
+var canFly = function(){ return true; }; 
+window.isDeadly = function(){ return true; }; 
+log(isNimble, canFly, isDeadly);*/
+
+var canFly = function(){ return true; }; 
+window.isDeadly = function(){ return true; }; 
+console.assert( isNimble() && canFly() && isDeadly(), "Still works, even though isNimble is moved." ); 
+function isNimble(){ return true; }
+</script>

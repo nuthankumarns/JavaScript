@@ -1,0 +1,84 @@
+<script>
+/*	function Person(firstname, lastname) {
+		this.firstname = firstname;
+		this.lastname = lastname;
+	}*/
+
+var object = Object.create(null);
+//newly created object has no prototype. It's a clone of null.
+</script>
+<script>
+/*var rectangle = {
+     area: function () {
+         return this.width * this.height;
+     }
+ };*/
+/* Equivalent to */
+var rectangle = Object.create(Object.prototype); 
+
+rectangle.area = function () {
+     return this.width * this.height;
+ }
+
+
+ var rect = Object.create(rectangle); 
+ rect.width = 5;
+  rect.height = 10;
+/* console.log(rectangle);
+
+ console.log(rect);*/
+</script>
+<script>
+ var rectangle = {
+      create: function (width, height) {
+          var self = Object.create(this);
+         self.height = height;
+          self.width = width;
+          return self;
+      },
+      area: function () {
+          return this.width * this.height;
+     }
+ };
+ 
+ var rect = rectangle.create(5, 10);
+ 
+ //console.log(rect);
+</script>
+<!--prototypal inheritance using prototypes-->
+<script>
+/*var square = Object.create(rectangle);
+ console.log(square);
+ square.create = function (side) {
+     return rectangle.create.call(this, side, side);
+ };
+ 
+ var sq = square.create(5);
+ console.log(sq);
+ console.log(sq.area());*/
+</script>
+
+<script>
+Object.prototype.extend = function (extension) {
+      var hasOwnProperty = Object.hasOwnProperty;
+      var object = Object.create(this);
+  
+      for (var property in extension)
+          if (hasOwnProperty.call(extension, property) ||
+              typeof object[property] === "undefined")
+                  object[property] = extension[property];
+ 
+     return object;
+ };
+
+console.log(rectangle);debugger;
+var square = rectangle.extend({
+     create: function (side) {
+         return rectangle.create.call(this, side, side);
+     }
+ });
+ 
+ var sq = square.create(5);
+ 
+ console.log(sq.area());
+</script>

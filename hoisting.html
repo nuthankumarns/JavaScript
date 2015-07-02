@@ -1,0 +1,71 @@
+<!--
+Function declarations and function variables are always moved (‘hoisted’) to the top of their JavaScript scope by the JavaScript interpreter
+-->
+<script>
+	/*function foo(){
+		function bar() {
+			return 3;
+		}
+		return bar();
+		function bar() {
+			return 8;
+		}
+	}
+	console.log(foo());*/
+
+/*	function foo(){
+		var bar = function() {
+			return 3;
+		};
+		return bar();
+		var bar = function() {
+			return 8;
+		};
+	}
+console.log(foo())*/
+	
+/*	function foo(){
+		var bar = function() {
+			return 3;
+		};
+		return bar();
+		var bar = function() {
+			return 8;
+		};
+	}
+	console.log(foo());*/
+	function foo(){
+		return bar();
+		var bar = function() {
+			return 3;
+		};
+		var bar = function() {
+			return 8;
+		};
+	}
+	console.log(foo());
+	//console.log(foo());
+</script>
+
+<script>
+/*foo(); // alerts foo
+foo = function () { alert('bar')};
+function foo () { alert('foo');}
+foo(); // alerts bar*/
+</script>
+
+<script>
+  // Error
+/*  functionOne();
+
+  var functionOne = function() {
+  };*/
+</script>
+
+<script>
+  // No error
+/*  functionTwo();
+
+  function functionTwo() {
+  }*/
+</script>

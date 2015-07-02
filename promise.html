@@ -1,0 +1,370 @@
+<!--The point of promises is to give us back functional composition and error bubbling in the async world.-->
+<!--promises are a way that lets us write asynchronous code that is almost as easy to write as if it was synchronous.-->
+<!--Promises Guarantees-->
+<!--Promises can be chained-->
+<!--Improve Code Readability-->
+<!--Error handling-->
+<!--get rid of unnecessary if-elses-->
+<!--With promises, the order of the callbacks is respected. We're guaranteed to have our done callback called first, then our fail callback, and finally our always callback.-->
+<!--The best part about promises is you can chain them!-->
+<!--ability to combine multiple API calls. -->
+<!--Rather than directly passing callbacks to functions, something which can lead to tightly coupled interfaces, 
+	using promises allows one to separate concerns for code that is synchronous or asynchronous.-->
+	<!--A Promise(object) is an async value that some point in future will have a value.. Call a method n return a obj-->
+	<!--Delayed Response-->
+	<script>
+//Sequential join
+//Callbacks way
+$("#button").click(function(){
+	promptUserForTwitterHandle(function(handle){
+		twitter.getTweetsFor(handle, function(tweets){
+			ui.show(tweets);
+		})
+	})
+});
+//Promises
+$("#button").clickPromise()
+.then(promptUserForTwitterHandle)
+.then(twitter.getTweetsFor)
+.then(ui.show)
+
+
+//Parallel join
+var tweets, answers, checkins;
+
+twitter.getTweetsFor("kodiakptt", function(result){
+	tweets = result;
+	somethingFinished();
+})
+stackoverflow.getAnswersFor("kodiakptt", function(result){
+	answers = result;
+	somethingFinished();
+})
+linkedin.getEmployeesOf("kodiakptt", function(result){
+	employees = result;
+	somethingFinished;
+})
+//Parallel Promises
+Q.all([
+	twitter.getTweetsFor("kodiakptt"),
+	stackoverflow.getAnswersFor("kodiakptt"),
+	linkedin.getEmployeesOf("kodiakptt")]
+	).then(runction(results){
+		console.log(results[0], results[1], results[2]);
+	})
+//OR
+Q.all([
+	twitter.getTweetsFor("kodiakptt"),
+	stackoverflow.getAnswersFor("kodiakptt"),
+	linkedin.getEmployeesOf("kodiakptt")]
+	).then(runction(tweets, answers, employees){
+		console.log(tweets, answers, employees);
+	})
+</script>
+
+<!--The Sync <===> Async Parallel-->
+<script> 
+	var result, threw=false;
+
+	try{
+		result = doSomethingSync();
+	}catch(ex){
+		threw = true;
+		handle(ex);
+	}
+	if(!threw){
+		process(result);
+	}
+
+//IN promises
+doSomethingAsync()
+.then(
+	process,
+	handle
+	);
+</script>
+
+
+<!--Simple Functional Transform-->
+<script> 
+	var user = getUser();
+	var userName = user.name;
+
+//becomes
+var userNamePromise = getUser().then(function(user){
+	return user.name;
+});
+</script>
+
+
+<script>
+/* assume getScript has signature like: function (path, callback, context) 
+and listens to onload && onreadystatechange */
+$(function () {
+	//Call1
+	getScript('path/to/CodeMirror', getJSMode);
+
+	//Call2
+   // onreadystate is not reliable for callback args.
+   function getJSMode() {
+   	getScript('path/to/CodeMirror/mode/javascript/javascript.js', 
+   		ourAwesomeScript);
+   };
+
+   //Call3
+   function ourAwesomeScript() {
+   	console.log("CodeMirror is awesome, but I'm too impatient.");
+   };
+});
+</script>
+<script>
+	/* Assume getScript returns a promise object */
+	$(function () {
+		//Method chaining
+		$.when(
+			//When the below call complete, call then() cb
+			getScript('path/to/CodeMirror'),
+			//Additional we can also return parameters from 1st call to 2nd call for which
+			//Promise handles those return statements internally
+			getScript('path/to/CodeMirror/mode/javascript/javascript.js')
+			).then(function () {
+				console.log("CodeMirror is awesome, but I'm too impatient.");
+			});
+		});
+	</script>
+
+<!-- 
+http://davidwalsh.name/write-javascript-promises
+http://www.slideshare.net/domenicdenicola/promises-promises?related=1
+http://www.slideshare.net/domenicdenicola/callbacks-promises-and-coroutines-oh-my-the-evolution-of-asynchronicity-in-javascript
+http://stackoverflow.com/questions/6801283/what-are-the-differences-between-deferred-promise-and-future-in-javascript?rq=1
+https://www.youtube.com/watch?v=hf1T_AONQJU
+https://www.youtube.com/watch?v=obaSQBBWZLk
+-->
+
+
+<!--Synchronous API-->
+<script>
+	function getUser(name){
+		var sql = 'SELECT * FROM users WHERE name=?';
+	var user = query(sql, name);//Blocking, Thread can't do anything else whilst querying.
+	if(!user){
+		throw new Error('no user!');
+	}
+	return user;
+}
+</script>
+
+<!--Concurrency using Event loop-->
+<!--Callbacks-->
+<!--Asynchronous API-->
+<!--Functions can Return throw, error and callback-->
+<!--NO Stack(NO Return/Throw) callstack flows away, unable to maintain call stack-->
+<!--Flaw below cannot handle 2 subsequent errors-->
+<script>
+	function getUser(name, callback){
+		var sql = 'SELECT * FROM users WHERE name=?';
+	//Call my callback when done with the operation!
+	query(sql, name, function(error, user){
+		if(error){
+			callback(error);
+		} else if(!user){
+			callback(new Error('no user!'));
+		}else{
+			//null as error arg
+			callback(null, user);
+		}
+//Don't throw error in functions that have callbacks
+
+})
+}//In callback there's no return! no throw!
+</script>
+
+
+<script>
+	getUser('kodiakptt', function(error, user){
+	//...
+})
+
+//becomes
+//then requires 2 args (spec) 
+//1st fullfillment, 2nd rejection handler
+//Future call will be no-ops
+getUser('kodiakptt').then(function(user){
+	//'...'
+}, function(error){
+
+});
+</script>
+
+
+
+<script> 
+//Sync code!
+var user = getUser('kodiakptt');
+var name = user.name;
+
+//becomes
+//Async
+getUser('kodiakptt').then(function(user){
+	return user.name;
+})
+</script>
+
+<script>
+//Sync code!
+var user = getUser('kodiakptt');
+if(!user) {
+	throw new Error('no user!');
+}
+var name = user.name;
+
+//becomes
+//Async
+getUser('kodiakptt').then(function(user){
+	if(!timeline) throw new Error('no user!');
+	return user.name;
+});
+</script>
+
+
+<script> 
+//Sync pattern
+try {
+	deliverTweetTo(tweet, 'kodiakptt');
+} catch(error){
+	handlerError(error);
+}
+
+//becomes
+//Instead of throwing immediately, deliverTweet return a promise
+deliverTweetTo(tweet, 'kodiakptt')
+	.then(undefined, handlerError);//Similar to catch
+	//
+</script>
+
+<script> 
+	try{
+		var user = getUser('kodiakptt');
+	} catch (error){
+		throw new Error('ERROR: ' + error.message);
+	}
+
+//becomes
+//Promise style
+//All the operations are Synchronous callstack in Async callstack.
+//Asynchronousity.
+//Promise's callstack returning Meaning full objects.
+//Guarantees of no-ops on rejection n fullfillment handlers.
+getUser('kodiakptt').then(undefined, function (error){
+	throw new Error('ERROR: ' + error.message);
+})
+
+</script>
+
+
+
+
+
+<!--Operations in sequence - Chaning-->
+<script>
+
+	var user = getUser('kodiakptt');
+	var tweets = getNewTweets(user);
+	updateTimeline(tweets);
+
+//using callbacks
+getUser('kodiakptt', function(user){
+	getNewTweets(user, function(tweets){
+		updateTimeline(tweets);
+	});
+});
+//using promises
+//Getback an promise object
+getUser('kodiakptt')//Once have the result from getuser call pass that obj to getNewTweets fn
+	.then(getNewTweets)//Similarly...:)
+	.then(updateTimeline);
+	//Chaining becomes simple
+</script>
+
+
+<!--Handling Exceptions-->
+<script> 
+//Sync
+//Anyone could throw and we should be able to handle the errors
+try{
+	var user = getUser('kodiakptt');
+	var tweets = getNewTweets(user);
+	updateTimeline(tweets);
+} catch (error){
+	handlerError(error);
+}
+
+//Callbacks
+//Every single step Manual handling because callstack
+//
+getUser('kodiakptt', function(error, user){
+	if(error){
+		handlerError(error);
+	}else{
+		getNewTweets(user, function(error, tweets){
+			if(error){
+				handlerError(error);
+			}else{
+				updateTimeline(tweets, function(error){
+					if(error){
+						handlerError(error);
+					}
+				})
+			}
+		})
+	}
+})
+
+
+//Using promises
+//Get back callstack
+//Propagate errors n retun values in the stack
+//try catch using promises.
+getUser('kodiakptt')//chain succession
+	.then(getNewTweets)//chain succession
+	.then(updateTimeline)//chain succession
+	.then(undefined, handlerError);//If any of the above step fails, return rejected promise. straight to here!
+</script>
+
+
+
+<!--Fallback: compatibility with callbacks-->
+<script> 
+function createUser(userName, userData, callback){
+	return database.ensureUserNameNotTaken(userName)
+		.then(function(){
+			database.saveUserData(userName, userData);
+		})
+		.nodeify(callback);
+		//If there's a callback, handle it instead of promise.
+		//If there's no callback, will return promise based API
+}
+</script>
+
+
+<!--Execute Operations in parallel/Concurrency-->
+
+<script> 
+function getNewTweetsForUsers(users){
+	return users.map(getNewTweets);
+}
+
+//becomes
+var q=require('q');
+
+function getNewTweetsForUsers(users){
+	var promises = user.map(getNewTweets);
+	//As soon as all theses promises are resolved, aggregate all the results and return the promise.
+	//If any of the promise fails, return rejected promise.
+	return q.all(promises);
+}
+//Promise will maintain the state of error(s)
+//Fault Tolerant servers!
+//Errors don't crash the program.
+</script>

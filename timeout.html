@@ -1,0 +1,49 @@
+<script>
+//Javascript does not have block scope
+//for-Loop with Delay in JavaScript
+
+
+//Synchronous For loop
+for (var index = 1; index <= 50; index++) {
+	console.log(index)
+	setTimeout(function() {
+		console.log(index);
+	}, 100);    
+}
+	//logs 50 fifty times
+	//For loop is synchronous
+	//While setTimeout is Asynchronous
+	//For loop is finished first and then executes the setTimeout will fire together after 100ms.
+	//var key word binds to the function scope, not the current block scope like other languages. 
+	console.log('Self invoking recursive function below')
+
+	//maxLoops & counter keep track of count of function execution
+	var maxLoops = 50;
+	var counter = 0;
+//Self invoking recursive function
+(function next() {
+	 // break if maxLoops has reached
+	 if (counter++ >= maxLoops) {
+	 	return;
+	 }
+	 console.log(counter);
+	 setTimeout(function() {
+// call next() recursively
+next();
+}, 100);
+	})();
+
+
+	//Even better without noise & pollution
+	(function next(counter, maxLoops) {
+    // break if maxLoops has reached
+    if (counter++ >= maxLoops) {
+    	return;
+    }
+    setTimeout(function() {
+    	console.log(counter);
+        // call next() recursively
+        next(counter, maxLoops);
+    }, 100);
+})(0, 50);
+</script>

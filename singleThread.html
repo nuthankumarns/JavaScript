@@ -1,0 +1,20 @@
+<script> 
+	function main() {
+		console.log("step 1");
+		console.log("step 2");
+	//	doSomething(myCallBack);
+		window.setTimeout(doSomething, 0, myCallBack);
+		console.log("step 4");
+	}
+
+	function doSomething(f) {
+  //accessTheDatabase(); // this could take a while
+  console.log("step 3");
+  f(); // done - now call back
+}
+
+function myCallBack() {
+	console.log("calling back!");
+}
+main();
+</script>

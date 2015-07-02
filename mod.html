@@ -1,0 +1,15 @@
+<script>
+(function(name, definition) {
+    if (typeof module != 'undefined') module.exports = definition();
+    else if (typeof define == 'function' && typeof define.amd == 'object') define(definition);
+    else this[name] = definition();
+}('mod', function() {
+    //This is the code you would normally have inside define() or add to module.exports
+    return {
+        sayHi: function(name) {
+            console.log('Hi ' + name + '!');
+        }
+    };
+}));
+</script>
+<script>mod.sayHi('Marc');</script>

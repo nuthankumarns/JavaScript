@@ -1,0 +1,30 @@
+<script>
+var x = 0;
+function a(x)
+{
+    x++;
+}
+a(x);
+console.log(x); //Here I want to have 1 instead of 0
+</script>
+<!--
+In this case, x is a reference to an object. When x is passed to the function a, that reference is copied over to obj. Thus, obj and x refer to the same thing in memory. Changing the Value property of obj affects the Value property of x.
+-->
+
+
+
+<!--
+Javascript will always pass function parameters by value. That's simply a specification of the language. You could create x in a scope local to both functions, and not pass the variable at all.
+-->
+
+<script>
+var x = {Value: 0};
+
+function a(obj)
+{
+    obj.Value++;
+}
+
+a(x);
+console.log(x.Value); //Here i want to have 1 instead of 0
+</script>

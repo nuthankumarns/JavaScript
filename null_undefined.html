@@ -1,0 +1,67 @@
+<script>
+	var obj = { key: undefined };
+console.log(obj["key"] != undefined); // false, but the key exists!
+console.log(obj);
+
+</script>
+
+<script>
+console.log("key" in obj) // true, regardless of the actual value
+</script>
+
+<script>
+console.log(!("key" in obj))// true if "key" doesn't exist in object
+console.log(!"key" in obj)   // ERROR!  Equivalent to "false in obj"
+</script>
+
+<script>
+console.log(obj.hasOwnProperty("key")) // true
+</script>
+
+<script>
+	if (typeof something === "undefined") {
+		console.log("something is undefined");
+	}
+</script>
+
+<script>
+// Degenerate code. DO NOT USE.
+var undefined = false;  // Shockingly, this is completely legal!
+console.log(undefined);
+//if (myVar === undefined) { //Uncaught ReferenceError: myVar is not defined
+	console.log("You have been misled. Run away!");
+//}
+
+
+//The most robust way to perform this test is:
+console.log(typeof myVar);
+if (typeof myVar === "undefined"){
+	console.log('robust way to perform if var is undefined');
+}
+</script>
+
+<!--
+undefined means that the variable value has not been defined; it is not known what the value is.
+null means that the variable value is defined and set to null (has no value).
+-->
+
+<script>
+console.log(typeof(null));      // object
+console.log(typeof(undefined)); // undefined
+
+console.log(null !== undefined) //true
+console.log(null == undefined)  //true
+</script>
+<!--
+null is primitive value.
+null is an object, but we cannot attach properties to it-->
+<script>
+console.log(typeof unknownVariable === "undefined"); // true
+
+var foo;
+console.log(typeof foo === "undefined"); // true
+console.log(foo === undefined); // true
+
+var bar = null;
+console.log(bar === null); // true
+</script>

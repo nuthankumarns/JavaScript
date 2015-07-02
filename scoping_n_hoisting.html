@@ -1,0 +1,105 @@
+<!--Traditional languages block level scoping C, C++, C#, or Java-->
+<script>
+/*
+#include <stdio.h>
+int main() {
+	int x = 1;
+	printf("%d, ", x); // 1
+	if (1) {
+		int x = 2;
+		printf("%d, ", x); // 2
+	}
+	printf("%d\n", x); // 1
+}
+*/
+</script>
+
+<!--function level scoping-->
+<script>
+	var x = 1;
+console.log(x); // 1
+if (true) {
+	var x = 2;
+	console.log(x); // 2
+}
+console.log(x); // 2
+</script>
+
+
+<!--Use anonymous functions to create block level scope-->
+<script>
+	function foo() {
+		var x = 1;
+		console.log(x)
+		if (x) {
+			(function () {
+				var x = 2;
+				console.log(x)
+			// some other code
+		}());
+		}
+		console.log(x)
+	// x is still 1.
+}
+foo();
+</script>
+
+<!--Inference: Function declarations and variable declarations are always moved (“hoisted”) 
+invisibly to the top of their containing scope by the JavaScript interpreter.-->
+<script>
+function foo() {
+	bar();
+	var x = 1;
+}
+//is actually interpreted like this:
+
+function foo() {
+	var x;
+	bar();
+	x = 1;
+}
+</script>
+<script>
+function test() {
+	foo(); // TypeError "foo is not a function"...> var foo; is hoisted and interpreter assumes it as a variable.
+	bar(); // "this will run!"
+	var foo = function () { // function expression assigned to local variable 'foo'
+		alert("this won't run!");
+	}
+	function bar() { // function declaration, given the name 'bar'
+		alert("this will run!");
+	}
+}
+test();
+</script>
+
+<!--Named function expressions-->
+<script>
+foo(); // TypeError "foo is not a function"
+bar(); // valid
+baz(); // TypeError "baz is not a function"
+spam(); // ReferenceError "spam is not defined"
+
+var foo = function () {}; // anonymous function expression ('foo' gets hoisted)
+function bar() {}; // function declaration ('bar' and the function body get hoisted)
+var baz = function spam() {}; // named function expression (only 'baz' gets hoisted)
+
+foo(); // valid
+bar(); // valid
+baz(); // valid
+spam(); // ReferenceError "spam is not defined"
+</script>
+
+<!--Hence, Best practices-->
+<script>
+//Always declare variables with a var statement.
+//Recommended to have exactly one var statement per scope, and that it be at the top.
+
+function foo(a, b, c) {
+    var x = 1,
+    	bar,
+    	baz = "something";
+
+    	//Do something else
+}
+</script>
